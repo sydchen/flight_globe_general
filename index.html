@@ -72,7 +72,8 @@ const scene=new THREE.Scene();scene.background=new THREE.Color('#030b17');
 const camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,.1,200);camera.position.set(0,7.1,18.5);
 const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.3;document.getElementById('view').appendChild(renderer.domElement);
 const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.05;controls.enablePan=false;controls.minDistance=7.0;controls.maxDistance=32;controls.autoRotate=false;
-scene.add(new THREE.AmbientLight(0xa7caeb,1.15));const sunlight=new THREE.DirectionalLight(0xffffff,2.3);sunlight.position.set(-8,10,14);scene.add(sunlight);const fill=new THREE.DirectionalLight(0x3d8ef7,1.1);fill.position.set(7,-3,-9);scene.add(fill);
+// Even, neutral illumination keeps coastlines readable as the globe rotates.
+scene.add(new THREE.AmbientLight(0xffffff,2.2));const sunlight=new THREE.DirectionalLight(0xffffff,1.6);sunlight.position.set(-8,10,14);scene.add(sunlight);const fill=new THREE.DirectionalLight(0xdcecff,1.2);fill.position.set(7,-3,-9);scene.add(fill);
 const earth=new THREE.Mesh(new THREE.SphereGeometry(R,96,64),new THREE.MeshPhongMaterial({color:0xffffff,specular:0x23405b,shininess:12}));scene.add(earth);
 // Three.js official open texture. A procedural colored sphere remains visible if the image fails.
 new THREE.TextureLoader().load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',t=>{t.colorSpace=THREE.SRGBColorSpace;earth.material.map=t;earth.material.needsUpdate=true;},undefined,()=>{earth.material.color.set('#286092');});
